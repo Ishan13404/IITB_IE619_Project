@@ -55,5 +55,5 @@ Enjoy playing Cardisco!
 
 ## For Any Queries
 
-For any questions or inquiries, please contact [Ishan Grover](22b1528@iitb.ac.in) and [Hardik Gupta](22b1540@iitb.ac.in).
+For any questions or inquiries, please contact [Ishan Grover](mailto:22b1528@iitb.ac.in) and [Hardik Gupta](mailto:22b1540@iitb.ac.in).
 
