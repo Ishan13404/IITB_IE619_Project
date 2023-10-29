@@ -9,7 +9,8 @@ This project was developed as a course project for IE619 Combinatorial Game Theo
 ## About the Game
 
 ### Impartial Games
-In combinatorial game theory, "impartial games" are games where the players share the same set of available moves, and the choices made by one player affect the options available to both players. In impartial games, players alternate making moves, and each move changes the state of the game for both players.
+In combinatorial game theory, "impartial games" are games where the players share the same set of available moves, and the choices made by one player affect the options available to both players. In impartial games, players alternate making moves, and each move changes the state of the game for both players. In impartial games, the players alternate making moves, and each move changes the state of the game for both players. The concept of Nim is a classic example of an impartial game. Other examples include Subtraction Game and Hackenbush. **Cardisco** in our own self created Impartial Game.
+
 
 ### Cardisco Game
 Cardisco is an impartial card game implemented using Python and the Pygame library. The game is played with a set of 13 cards numbered from 1 to 13. Players take alternating turns selecting cards based on specific rules, aiming to strategically outmaneuver their opponent.
