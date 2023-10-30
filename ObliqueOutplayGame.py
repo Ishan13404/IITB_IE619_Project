@@ -8,6 +8,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+background = (186, 232, 199)
 
 Screen_Width = 1000
 Screen_Height = 600
@@ -48,10 +49,6 @@ def Possible_Moves(Gameboard, piece):
         if Gameboard[piece_x-1][piece_y+1]=="__":
             moves.append([piece_x-1,piece_y+1])
 
-    # if len(moves)==0:
-    #     moves=["NA", "NA"]
-    # if len(moves)==1:
-    #     moves.append("NA")
     return moves
 
 def Move_Piece(Gameboard, piece, arr, Player):
@@ -76,20 +73,90 @@ def White_Wins(Gameboard):
             return 0
     return 1
 
-def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected, Player):
-    TextOnScreen("Player to Move : " +str(Player), blue, 700, 100)
-    TextOnScreen("Piece Selected : " +str(Piece_Selected), blue, 700, 200)
-    TextOnScreen("Available Moves : " + str(Possible_Moves(Gameboard, Piece_Selected)), blue, 700, 300)
+def Homescreen():
+    while(True):
+        gameWindow.fill(background)
+        TextOnScreen("Welcome to Oblique Outplay", (193,89, 65), Screen_Width*0.3, Screen_Height/2-25)
+        TextOnScreen("Press any key to start", (193, 89,65), Screen_Width*0.3, Screen_Height/2+25)
+        pygame.display.update()
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN :
+                return
+
+def Display_Rules():
+    rule_text = [
+        # "Rules of Oblique Outplay:",
+        # "",
+        "1. Gameplay:",
+        "   Players take turns making their moves, starting with the player controlling the white tokens.",
+        "",
+        "2. Movement Rules:",
+        "   Players move their tokens diagonally, one space at a time, towards their opponent's end row.",
+        "   Tokens can only move diagonally forward, i.e., towards the opponent's end.",
+        "   Tokens cannot move backward, horizontally, or vertically.",
+        "",
+        "3. Blocking and Obstruction:",
+        "   Tokens cannot jump over other tokens, whether they belong to the same player or the opponent.",
+        "   If a token's path is blocked by its own or the opponent's token, it cannot move to that square.",
+        "   Once a token reaches the opponent's end row, it cannot move further.",
+        "",
+        "4. Objective:",
+        "   The objective of the game is to strategically move your tokens in such a way that",
+        "     your opponent is unable to make a valid move on their turn.",
+        "",
+        "5. Winning Condition:",
+        "   A player loses the game if they are unable to move any of their tokens to a valid",
+        "     empty square on their turn. In such a situation, the other player wins.",
+        "",
+        "                                                 Press any key to jump back into the Game! All the Best!"
+    ]
+    font = pygame.font.SysFont(None, 35)
+    while(True):
+        gameWindow.fill(background)
+        TextOnScreen("Rules of Oblique Outplay:", black, 25,25)
+        y = 50
+        for line in rule_text:
+            font = pygame.font.SysFont(None, 25)
+            screen_text = font.render(line, True, black)
+            gameWindow.blit(screen_text, [25, y])
+            # TextOnScreen(line, black, 50, y)
+            y += 25
+        pygame.display.update()
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN or event.type == pygame.QUIT:
+                return
+
+
+def Display_Result(Gameboard, piece_r, piece_c, Piece_Selected, Player):
+    while(True):
+        gameWindow.fill(background)
+        Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected)
+        if Player==1:
+            TextOnScreen("White", white, 700, 100)
+
+        else :
+            TextOnScreen("Black", black, 700, 100)
+
+        TextOnScreen("         "+" Wins!!", blue, 700, 100)
+        TextOnScreen("Press e to Exit", blue, 700, 100+50)
+        TextOnScreen("Press r to Restart", blue, 700, 100+100)
+        pygame.display.update()
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_e):
+                return True
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                return False
+
+def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected):
+    TextOnScreen("*** Oblique Outplay ***", (91,69,156), 650, 25)
     pygame.draw.rect(gameWindow, black, [10, 10, Screen_Height-20, Screen_Height-20],5)
-    pygame.draw.line(gameWindow, black,[(Screen_Height-10)*0.2, 10],[(Screen_Height-10)*0.2,Screen_Height-15],5 )
-    pygame.draw.line(gameWindow, black,[(Screen_Height-10)*0.4, 10],[(Screen_Height-10)*0.4,Screen_Height-15],5 )
-    pygame.draw.line(gameWindow, black,[(Screen_Height-10)*0.6, 10],[(Screen_Height-10)*0.6,Screen_Height-15],5 )
-    pygame.draw.line(gameWindow, black,[(Screen_Height-10)*0.8, 10],[(Screen_Height-10)*0.8,Screen_Height-15],5 )
-    pygame.draw.line(gameWindow, black,[10, (Screen_Height-10)*0.2],[Screen_Height-15 ,(Screen_Height-10)*0.2],5 )
-    pygame.draw.line(gameWindow, black,[10, (Screen_Height-10)*0.4],[Screen_Height-15 ,(Screen_Height-10)*0.4],5 )
-    pygame.draw.line(gameWindow, black,[10, (Screen_Height-10)*0.6],[Screen_Height-15 ,(Screen_Height-10)*0.6],5 )
-    pygame.draw.line(gameWindow, black,[10, (Screen_Height-10)*0.8],[Screen_Height-15 ,(Screen_Height-10)*0.8],5 )
-    
+    for i in [0.2, 0.4, 0.6, 0.8]:
+        pygame.draw.line(gameWindow, black,[(Screen_Height-10)*i, 10],[(Screen_Height-10)*i,Screen_Height-15],5 )
+        pygame.draw.line(gameWindow, black,[10, (Screen_Height-10)*i],[Screen_Height-15 ,(Screen_Height-10)*i],5 )
+
     n=len(Gameboard)
     for i in range(1, n-1):
         for j in range(1, n-1):
@@ -103,8 +170,6 @@ def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected, Player):
             pygame.draw.circle(gameWindow, red, [65 + 118*(j-1), 65 + 118*(i-1)], 43, 3)
     
     pygame.draw.circle(gameWindow, blue, [65 + 118*(piece_c-1), 65 + 118*(piece_r-1)], 43,3)
-    
-
     pygame.display.update()
 
 
@@ -126,13 +191,35 @@ def OO_Game():
     piece_r, piece_c=1,1
     Piece_Selected=""
     while(not Game_Over):
-        gameWindow.fill((213, 186, 199))
-        Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected, Player)
+        gameWindow.fill(background)
+        TextOnScreen("Player to Move :", blue, 650, 100)
+        if Player==1:
+            TextOnScreen("White", white, 875, 100)
+        else :
+            TextOnScreen("Black", black, 875, 100)
+
+        TextOnScreen("Press e to Exit", black, 650, 150)
+        TextOnScreen("Press r to Restart", black, 650, 200)
+        TextOnScreen("Press h for Help", black, 650, 250)
+        TextOnScreen("Use the         Pointer to select", black, 600, 350)
+        TextOnScreen("Blue", blue, 705, 350)
+        TextOnScreen("a piece. Use Arrow keys to ", black, 600, 400)
+        TextOnScreen("navigate, press SPACEBAR to ", black, 600, 450)
+        TextOnScreen("select. Available options", black, 600, 500)
+        TextOnScreen("will be marked in       .", black, 600, 550)
+        TextOnScreen("Red", red, 835, 550)
+        
+        Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected,)
         pygame.display.update()
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_e):
-                return 
+                Game_Over=True 
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                OO_Game()
+                Game_Over=True
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_h:
+                Display_Rules()
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP and piece_r in list(range(2,6)):
                 piece_r-=1
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN and piece_r in list(range(1,5)):
@@ -172,14 +259,16 @@ def OO_Game():
                     Gameboard,Player=Move_Piece(Gameboard, Piece_Selected, [piece_r, piece_c], Player)
                     Piece_Selected=""
         if Player==2 and White_Wins(Gameboard):
-            Game_Over=True
-            print("White WINS!!")
+            Game_Over=Display_Result(Gameboard, -1, -1, "", 1)
+            if not Game_Over:
+                OO_Game()
+                Game_Over=True
         if Player==1 and Black_Wins(Gameboard):
-            Game_Over=True
-            print("Black WINS!!")    
-
-
+            Game_Over=Display_Result(Gameboard, -1, -1, "", 2)
+            if not Game_Over:
+                OO_Game()
+                Game_Over=True
 
 # Main Code Starts here
-
+Homescreen()
 OO_Game()
