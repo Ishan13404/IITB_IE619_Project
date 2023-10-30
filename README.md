@@ -1,19 +1,24 @@
-# IITB_IE619_Project
-
-# Cardisco Game
+# Combinatorial Games
 
 ## About the Project
 
-This project was developed as a course project for IE619 Combinatorial Game Theory at the Indian Institute of Technology Bombay (IIT Bombay) under the guidance of Professor Urban Larrson from the Industrial Engineering and Operational Research (IEOR) department.
+This repository contains implementations of two distinct combinatorial games: Cardisco and Oblique Outplay. These games are part of a course project for IE619 Combinatorial Game Theory at the Indian Institute of Technology Bombay (IIT Bombay) under Professor Urban Larrson from the Industrial Engineering and Operational Research (IEOR) department.
 
-## About the Game
+### About Impartial Games
 
-### Impartial Games
-In combinatorial game theory, "impartial games" are games where the players share the same set of available moves, and the choices made by one player affect the options available to both players. In impartial games, players alternate making moves, and each move changes the state of the game for both players. In impartial games, the players alternate making moves, and each move changes the state of the game for both players. The concept of Nim is a classic example of an impartial game. Other examples include Subtraction Game and Hackenbush. **Cardisco** in our own self created Impartial Game.
+Impartial games are a class of combinatorial games where both players have identical sets of moves available to them. The outcome depends solely on the positions and strategies of the players.
 
+### About Cardisco
 
-### Cardisco Game
-Cardisco is an impartial card game implemented using Python and the Pygame library. The game is played with a set of 13 cards numbered from 1 to 13. Players take alternating turns selecting cards based on specific rules, aiming to strategically outmaneuver their opponent.
+Cardisco is an impartial game played on a linear board with distinct moves for each player. The game revolves around making strategic moves to capture cards and avoid getting stuck.
+
+### About Partisan Games
+
+Partisan games, in contrast to impartial games, are games where the two players have distinct sets of moves available to them. Each player has their own set of options, and the choices of one player do not affect the options available to the other player.
+
+### About Oblique Outplay
+
+Oblique Outplay is a partisan game implemented here, played on a 5x5 grid with unique diagonal movement rules. Each player has their own set of tokens, and the goal is to outmaneuver the opponent by strategically moving your tokens forward.
 
 ## Installation
 
@@ -28,32 +33,19 @@ To play Cardisco, you need to have Python and the Pygame library installed on yo
    ```shell
    pip install pygame
 
-## Rules to Play the Game
+## How to Run the Game
 
-### Setup
-1. Arrange the 13 cards on a table in ascending order.
+1. For Cardisco, run the file named CardiscoGame.py.
 
-### Gameplay
-2. Two players take alternating turns selecting cards.
-3. Each turn, a player must choose one card based on the card pickup rules.
+2. For Oblique Outplay, run the file named ObliqueOutplayGame.py.
 
-### Card Pickup Rules
-4. The player who begins must select the card numbered 7 as their first move.
-5. In subsequent turns, players can only pick cards that meet these conditions:
-   - The card is adjacent to the last picked card.
-   - The card's number is double the number of the last picked card.
-   - The card's number is half the number of the last picked card (except for odd-numbered last picked cards).
+Additional logic for both games can be found in separate files for clarity and modularity.
 
-### Objective
-6. Players aim to strategically select cards to create a position that prevents their opponent from making any legal moves.
+## Game Rules
+Detailed game rules can be found within the games. Refer to the help section inside each game for a comprehensive explanation of how to play and win.
 
-### Winning Condition
-7. The player wins when their opponent cannot pick up any more cards.
-8. In simpler terms, the player who places their opponent in a situation where they can't make a move emerges victorious.
-
-Enjoy playing Cardisco!
+Enjoy playing Cardisco and Oblique Outplay!
 
 ## For Any Queries
 
 For any questions or inquiries, please contact [Ishan Grover](mailto:22b1528@iitb.ac.in) and [Hardik Gupta](mailto:22b1540@iitb.ac.in).
-
