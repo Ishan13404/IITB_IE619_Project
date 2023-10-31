@@ -161,15 +161,15 @@ def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected):
     for i in range(1, n-1):
         for j in range(1, n-1):
             if Gameboard[i][j] in ["W1", "W2", "W3", "W4", "W5"]:
-                pygame.draw.circle(gameWindow, white, [65 + 118*(j-1), 65 + 118*(i-1)], 40)
+                pygame.draw.circle(gameWindow, white, [65 + 116.5*(j-1), 65 + 116.5*(i-1)], 40)
             if Gameboard[i][j] in ["B1", "B2", "B3", "B4", "B5"]:
-                pygame.draw.circle(gameWindow, black, [65 + 118*(j-1),65 + 118*(i-1)], 40)
+                pygame.draw.circle(gameWindow, black, [65 + 116.5*(j-1),65 + 116.5*(i-1)], 40)
     
     if Piece_Selected !="":
         for [i,j] in Possible_Moves(Gameboard, Piece_Selected):
-            pygame.draw.circle(gameWindow, red, [65 + 118*(j-1), 65 + 118*(i-1)], 43, 3)
+            pygame.draw.circle(gameWindow, red, [65 + 116.5*(j-1), 65 + 116.5*(i-1)], 43, 3)
     
-    pygame.draw.circle(gameWindow, blue, [65 + 118*(piece_c-1), 65 + 118*(piece_r-1)], 43,3)
+    pygame.draw.circle(gameWindow, blue, [65 + 116.5*(piece_c-1), 65 + 116.5*(piece_r-1)], 43,3)
     pygame.display.update()
 
 
