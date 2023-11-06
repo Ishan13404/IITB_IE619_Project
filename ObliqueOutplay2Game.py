@@ -21,6 +21,13 @@ FPS = 30
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 40)
 
+def unique(list1):
+    unique_list = []
+    for x in list1:
+        if x not in unique_list:
+            unique_list.append(x)
+    return unique_list
+
 def TextOnScreen(text, colour, x, y):
     screen_text = font.render(text, True, colour)
     gameWindow.blit(screen_text, [x, y])
@@ -164,13 +171,6 @@ def Display_Result(Gameboard, piece_r, piece_c, Piece_Selected, Player):
 
 def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected):
     TextOnScreen("*** Oblique Outplay ***", (91,69,156), 650, 25)
-    TextOnScreen("Game Evaluation: ", blue, 650, 300)
-    if GameValue(Gameboard)>0:
-        TextOnScreen(str(GameValue(Gameboard)), white, 900, 300)
-    elif GameValue(Gameboard)==0:
-        TextOnScreen(str(GameValue(Gameboard)), blue, 900, 300)    
-    else :
-        TextOnScreen(str(GameValue(Gameboard)), black, 900, 300)
     pygame.draw.rect(gameWindow, black, [10, 10, Screen_Height-20, Screen_Height-20],5)
     for i in [0.2, 0.4, 0.6, 0.8]:
         pygame.draw.line(gameWindow, black,[(Screen_Height-10)*i, 10],[(Screen_Height-10)*i,Screen_Height-15],5 )
@@ -197,6 +197,7 @@ def Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected):
 
 def OO_Game():
     Game_Over=False
+    View_Game_Value=False
     Gameboard=[
     ["XX", "XX", "XX", "XX", "XX", "XX", "XX"],
     ["XX", "W1", "W2", "W3", "W4", "W5", "XX"],
@@ -217,17 +218,58 @@ def OO_Game():
         else :
             TextOnScreen("Black", black, 875, 100)
 
+        if not View_Game_Value:
+            TextOnScreen("Use the         Pointer to select", black, 600, 350)
+            TextOnScreen("Blue", blue, 705, 350)
+            TextOnScreen("a piece. Use Arrow keys to ", black, 600, 400)
+            TextOnScreen("navigate, press SPACEBAR to ", black, 600, 450)
+            TextOnScreen("select. Available options", black, 600, 500)
+            TextOnScreen("will be marked in       .", black, 600, 550)
+            TextOnScreen("Red", red, 835, 550)
+        if View_Game_Value:
+            TextOnScreen("Game Evaluation: ", blue, 650, 400)
+            if GameValue(Gameboard)>0:
+                TextOnScreen(str(GameValue(Gameboard)), white, 900, 400)
+            elif GameValue(Gameboard)==0:
+                TextOnScreen(str(GameValue(Gameboard)), blue, 900, 400)    
+            else :
+                TextOnScreen(str(GameValue(Gameboard)), black, 900, 400)
+            
+            # Left_Options, Right_Options = [], []
+            # for i in ["W1", "W2", "W3", "W4", "W5"]:    
+            #     Temp_Gameboard=Gameboard.copy()
+            #     for [x1,y1] in Possible_Moves(Temp_Gameboard,i):
+            #         Player=1
+            #         Temp2_Gameboard, Player = Move_Piece(Temp_Gameboard, i, [x1,y1], Player)
+            #         Left_Options.append(GameValue(Temp2_Gameboard)*2)
+            #         print("Gameboard :")
+            #         print(Temp2_Gameboard)
+            # Left_Options=unique(Left_Options)
+            # for j in ["B1", "B2", "B3", "B4", "B5"]:
+            #     Temp_Gameboard=Gameboard.copy()
+            #     for [x1,y1] in Possible_Moves(Temp_Gameboard,j):
+            #         Player=2
+            #         Temp2_Gameboard, Player = Move_Piece(Temp_Gameboard, j, [x1,y1], Player)
+            #         Right_Options.append(GameValue(Temp2_Gameboard)*2)
+            #         print("Gameboard :")
+            #         print(Temp2_Gameboard)
+            # Right_Options=unique(Right_Options)
+            # TextOnScreen("Left Options: " + str(Left_Options), black, 600, 400)
+            # TextOnScreen("Right Options: "+ str(Right_Options), black, 600, 450)
+            TextOnScreen("White has    Moves", blue, 650, 450)
+            TextOnScreen("Black has    Moves", blue, 650, 500)
+            n_white_moves, n_black_moves=0,0
+            for piece in ["W1", "W2", "W3", "W4", "W5"]:
+                n_white_moves += len(Possible_Moves(Gameboard, piece))
+            for piece in ["B1", "B2", "B3", "B4", "B5"]:
+                n_black_moves += len(Possible_Moves(Gameboard, piece))
+            TextOnScreen(str(n_white_moves), white, 790, 450)
+            TextOnScreen(str(n_black_moves), black, 790, 500)
+
         TextOnScreen("Press e to Exit", black, 650, 150)
         TextOnScreen("Press r to Restart", black, 650, 200)
         TextOnScreen("Press h for Help", black, 650, 250)
-        TextOnScreen("Use the         Pointer to select", black, 600, 350)
-        TextOnScreen("Blue", blue, 705, 350)
-        TextOnScreen("a piece. Use Arrow keys to ", black, 600, 400)
-        TextOnScreen("navigate, press SPACEBAR to ", black, 600, 450)
-        TextOnScreen("select. Available options", black, 600, 500)
-        TextOnScreen("will be marked in       .", black, 600, 550)
-        TextOnScreen("Red", red, 835, 550)
-        
+        TextOnScreen("Press TAB for Game Analysis", black, 600, 300)
         Draw_Game_Board(Gameboard, piece_r, piece_c, Piece_Selected)
         pygame.display.update()
         clock.tick(FPS)
@@ -239,6 +281,8 @@ def OO_Game():
                 Game_Over=True
             if event.type == pygame.KEYDOWN and event.key == pygame.K_h:
                 Display_Rules()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
+                View_Game_Value= not View_Game_Value
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP and piece_r in list(range(2,6)):
                 piece_r-=1
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN and piece_r in list(range(1,5)):
